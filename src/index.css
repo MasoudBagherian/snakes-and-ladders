@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .font-roboto-mono {
+    font-family: "Roboto Mono", sans-serif;
+  }
+  .font-roboto {
+    font-family: "Roboto", sans-serif;
+  }
+}
+
+@layer base {
+  html {
+    @apply text-[62.5%];
+    box-sizing: inherit;
+  }
+  body {
+    @apply text-[1.6rem];
+    @apply box-border;
+    @apply font-roboto-mono;
+    background-color: theme("colors.bg");
+  }
+}
