@@ -23,7 +23,7 @@ function FindPath() {
   );
   const successPath = useMemo(
     () => getSuccessPath(statesArray, snakes, ladders),
-    [snakes, ladders]
+    [row, col, snakes, ladders]
   );
   function handleClickBtn() {
     setShowSuccessPath((prev) => !prev);

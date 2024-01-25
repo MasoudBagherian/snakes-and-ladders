@@ -13,13 +13,16 @@ const ladders = [
 /** testing area */
 // console.log({ statesArray });
 // const res = getNeighbors(statesArray, 25);
-const res = BFS(statesArray, snakes, ladders);
+// const res = implementBFS(statesArray, snakes, ladders);
+// const res = implementDFS(statesArray, snakes, ladders);
+// const res = getBFSPath(statesArray, snakes, ladders);
+
 // --------------------------------------------
 // const states = [1, 2];
 // pushStates(states, [2, 16]);
 // console.log({ states });
 // --------------------------------------------
-console.log(res);
+// console.log(res);
 /** end testing area */
 export function getNeighbors(statesArray, state, snakes, ladders) {
   const { row, col } = getStatePosition(statesArray, state);
@@ -46,13 +49,12 @@ function pushStates(queue, states) {
     queue.push(state);
   }
 }
-export function BFS(statesArray, snakes, ladders) {
+function implementBFS(statesArray, snakes, ladders) {
   const goalState = Math.max(...statesArray.map((item) => item.value));
   let neighbors = [];
   // const queue = [1];
   const queue = [{ value: 1, parent: null }];
   const deletedStates = [];
-  let k = 1;
   while (1) {
     const currentState = queue.shift();
 
@@ -90,7 +92,57 @@ export function BFS(statesArray, snakes, ladders) {
     // );
     // console.log("queue", queue);
     // console.log("----------------------------");
-    k++;
   }
   return deletedStates;
+}
+export function getBFSPath(statesArray, snakes, ladders) {
+  const goalState = Math.max(...statesArray.map((item) => item.value));
+  const deletedStates = implementBFS(statesArray, snakes, ladders);
+  // console.log({ deletedStates });
+
+  const BFSPath = [goalState];
+  let currentParent = deletedStates.find(
+    (item) => item.value === goalState
+  ).parent;
+
+  while (1) {
+    BFSPath.push(currentParent);
+    if (currentParent === 1) {
+      break;
+    }
+    currentParent = deletedStates.find(
+      (item) => item.value === currentParent
+    ).parent;
+  }
+  return BFSPath.reverse();
+}
+export function implementDFS(statesArray, snakes, ladders) {
+  const goalState = Math.max(...statesArray.map((item) => item.value));
+  let currentState = 1;
+  const stack = [1];
+  const prevStates = [];
+
+  // let k = 1;
+  while (1) {
+    const neighbor = getNeighbors(statesArray, currentState, snakes, ladders)
+      .filter((item) => !prevStates.includes(item))
+      .sort((a, b) => a - b)[0];
+    if (neighbor) {
+      stack.push(neighbor);
+      prevStates.push(currentState);
+      currentState = neighbor;
+    } else {
+      stack.pop();
+      prevStates.push(currentState);
+      currentState = stack[stack.length - 1];
+    }
+    if (currentState === goalState) {
+      break;
+    }
+    // console.log(`------ k = ${k} -------`);
+    // console.log("stack", stack);
+    // console.log("------------------------");
+    // k++;
+  }
+  return stack;
 }

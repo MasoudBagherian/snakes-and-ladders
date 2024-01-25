@@ -1,5 +1,3 @@
-import React from "react";
-
 function BtnPrimary({ children, handleClick, className, isDisabled }) {
   return (
     <button

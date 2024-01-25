@@ -16,7 +16,6 @@ function getValidValues(row, col, snakes, ladders) {
   return allValues.filter((item) => !invalidValues.includes(item));
 }
 function AddLadderItem({ row, col, addLadder, snakes, ladders, boardArray }) {
-  console.log("AddLadderItem: ", { boardArray });
   const validValues = getValidValues(row, col, snakes, ladders);
   const [ladderTop, setLadderTop] = useState(null);
   const [ladderBottom, setLadderBottom] = useState(null);

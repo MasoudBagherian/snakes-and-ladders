@@ -10,7 +10,6 @@ function BoardCell({
   colCount,
   action,
   snakes,
-
   ladders,
   isInSuccessPath,
   showSuccessPath,

@@ -1,3 +1,4 @@
+import { createRef, useRef } from "react";
 import BoardCell from "./BoardCell";
 // import { motion, stagger, transform, useAnimate } from "framer-motion";
 // import { useContext, useEffect, useState } from "react";
@@ -60,7 +61,7 @@ function Board({
   //     handleShowingSuccessPath();
   //   }
   // }, [showSuccessPath]);
-
+  console.log({ successPath });
   return (
     <div
       className="p-[5px] bg-primary"
