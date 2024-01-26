@@ -115,7 +115,7 @@ function Menu({ onToggleMenu }) {
   }
   return (
     <motion.div
-      className="fixed z-[1] pb-[4rem] px-[2rem] top-0 left-0 w-full h-full bg-white overflow-y-auto"
+      className="fixed z-[10] pb-[4rem] px-[2rem] top-0 left-0 w-full h-full bg-white overflow-y-auto"
       initial={{ x: "-100%" }}
       animate={{ x: 0 }}
       exit={{ x: "-100%" }}

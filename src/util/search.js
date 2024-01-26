@@ -49,7 +49,7 @@ function pushStates(queue, states) {
     queue.push(state);
   }
 }
-function implementBFS(statesArray, snakes, ladders) {
+export function implementBFS(statesArray, snakes, ladders) {
   const goalState = Math.max(...statesArray.map((item) => item.value));
   let neighbors = [];
   // const queue = [1];
@@ -137,6 +137,7 @@ export function implementDFS(statesArray, snakes, ladders) {
       currentState = stack[stack.length - 1];
     }
     if (currentState === goalState) {
+      prevStates.push(currentState);
       break;
     }
     // console.log(`------ k = ${k} -------`);
@@ -144,5 +145,6 @@ export function implementDFS(statesArray, snakes, ladders) {
     // console.log("------------------------");
     // k++;
   }
-  return stack;
+  // console.log({ prevStates });
+  return { successPath: stack, methodPath: prevStates };
 }

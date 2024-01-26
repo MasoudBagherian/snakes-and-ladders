@@ -1,7 +1,13 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
-function SelectionBox({ options, onOptionChange, value, children }) {
+function SelectionBox({
+  options,
+  onOptionChange,
+  value,
+  isDisabled,
+  children,
+}) {
   const [showOptions, setShowOptions] = useState(false);
   const selectionRef = useRef();
   function handleClickSelection() {
@@ -27,7 +33,9 @@ function SelectionBox({ options, onOptionChange, value, children }) {
       {children}
       <div
         ref={selectionRef}
-        className="relative p-[5px] leading-[20px] h-[30px] border-[1px] border-black bg-whtie cursor-pointer table rounded-[3px] text-[1.4rem] min-w-[5rem] font-bold"
+        className={`${
+          isDisabled ? "pointer-events-none cursor-not-allowed" : ""
+        } relative p-[5px] leading-[20px] h-[30px] border-[1px] border-black bg-whtie cursor-pointer table rounded-[3px] text-[1.4rem] min-w-[5rem] font-bold`}
         onClick={handleClickSelection}
       >
         {value}

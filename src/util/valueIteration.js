@@ -607,7 +607,7 @@ export function implementValueIteration(statesArray, snakes, ladders) {
   // console.log("newValues", newValues);
   // console.log(statesArray.map((item) => item.value));
   // console.log("QStatesArray", QstatesArray);
-  console.log({ k });
+  // console.log({ k });
   return statesArray.map((item, idx) => ({
     ...item,
     action: QstatesArray[idx],

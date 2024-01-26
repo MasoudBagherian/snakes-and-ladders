@@ -4,14 +4,13 @@ import { FiChevronLeft as ActionLeft } from "react-icons/fi";
 import { FiChevronRight as ActionRight } from "react-icons/fi";
 import { FiChevronsLeft as ActionLongLeft } from "react-icons/fi";
 import { FiChevronsRight as ActionLongRight } from "react-icons/fi";
-// import { motion } from "framer-motion";
+import { motion } from "framer-motion";
 function BoardCell({
   cellNumber,
   colCount,
   action,
   snakes,
   ladders,
-  isInSuccessPath,
   showSuccessPath,
 }) {
   function showAction() {
@@ -127,13 +126,19 @@ function BoardCell({
         {showSnake()}
 
         {showSuccessPath ? showAction() : null}
-        {showSuccessPath && isInSuccessPath ? (
-          <div
-            className=" absolute top-[-2px] bottom-[-2px] left-[-2px] 
-          right-[-2px] bg-success/60 board-overlay"
-            // initial={{ opacity: 0, scale: 0 }}
-          ></div>
-        ) : null}
+
+        <motion.div
+          className="absolute top-[-2px] bottom-[-2px] left-[-2px] 
+          right-[-2px] bg-success/80 cell-overlay cell-overlay-success z-[2]"
+          id={`cell-success-${cellNumber}`}
+          initial={{ opacity: 0, scale: 0 }}
+        ></motion.div>
+        <motion.div
+          className="absolute top-[-2px] bottom-[-2px] left-[-2px] 
+          right-[-2px] bg-danger/60 cell-overlay z-[1]"
+          id={`cell-danger-${cellNumber}`}
+          initial={{ opacity: 0, scale: 0 }}
+        ></motion.div>
       </div>
     </div>
   );

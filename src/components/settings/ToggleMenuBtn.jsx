@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 function ToggleMenuBtn({ onToggleMenu, showMenu }) {
   return (
     <button
-      className="fixed z-[2] top-[2rem] left-[2rem] rounded-[50%] flex justify-center items-center flex-col w-[40px] h-[40px] border-[2px] border-primary bg-white"
+      className="fixed z-[20] top-[2rem] left-[2rem] rounded-[50%] flex justify-center items-center flex-col w-[40px] h-[40px] border-[2px] border-primary bg-white"
       onClick={onToggleMenu}
     >
       <motion.span

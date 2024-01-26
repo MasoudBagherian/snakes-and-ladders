@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-function Header() {
+function Header({ isAnimating }) {
   const navigate = useNavigate();
 
   function goToHomePage() {
@@ -9,8 +9,9 @@ function Header() {
   return (
     <div className="flex justify-end py-[2rem]">
       <button
-        className="border-b-[2px] border-b-primary-light text-[2rem]"
+        className="border-b-[2px] border-b-primary-light text-[2rem] disabled:cursor-not-allowed"
         onClick={goToHomePage}
+        disabled={isAnimating}
       >
         home
       </button>
