@@ -8,6 +8,7 @@ import Settings from "../components/settings/Settings";
 import { getBFSPath, implementBFS, implementDFS } from "../util/search";
 import BtnPrimary from "../components/layout/BtnPrimary";
 import { useAnimate } from "framer-motion";
+import BoardGuidance from "../components/BoardGuidance";
 const methods = {
   BFS: "BFS method",
   DFS: "DFS method",
@@ -83,6 +84,7 @@ function SearchBoard() {
     <>
       <Settings isBtnDisabled={isAnimating} />
       <Header isBtnDisabled={isAnimating} />
+
       <div className="my-[2rem]">
         <SelectionBox
           options={[methods.BFS, methods.DFS]}
@@ -93,6 +95,7 @@ function SearchBoard() {
           <h2 className="mb-[1rem] text-[2rem]">select a method</h2>
         </SelectionBox>
       </div>
+      <BoardGuidance snakes={snakes} ladders={ladders} />
       <BtnPrimary handleClick={toggleShowSuccessPath} isDisabled={isAnimating}>
         {showSuccessPath
           ? "reset"
