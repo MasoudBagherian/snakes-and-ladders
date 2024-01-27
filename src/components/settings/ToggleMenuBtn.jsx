@@ -1,10 +1,11 @@
 import { motion } from "framer-motion";
 
-function ToggleMenuBtn({ onToggleMenu, showMenu }) {
+function ToggleMenuBtn({ onToggleMenu, showMenu, isDisabled }) {
   return (
     <button
-      className="fixed z-[20] top-[2rem] left-[2rem] rounded-[50%] flex justify-center items-center flex-col w-[40px] h-[40px] border-[2px] border-primary bg-white"
+      className="fixed z-[20] top-[2rem] left-[2rem] rounded-[50%] flex justify-center items-center flex-col w-[40px] h-[40px] border-[2px] border-primary bg-white disabled:cursor-not-allowed"
       onClick={onToggleMenu}
+      disabled={isDisabled}
     >
       <motion.span
         className="h-[3px] my-[2px] bg-primary rounded-[100px] w-[24px]"

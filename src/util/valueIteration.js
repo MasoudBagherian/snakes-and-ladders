@@ -43,10 +43,7 @@ function getStatesArraySize(statesArray) {
   const colCount = Math.max(...statesArray.map((item) => item.col));
   return { rowCount, colCount };
 }
-// function getStatePosition(statesArray, state) {
-//   const statePos = statesArray.find((item) => item.value === state);
-//   return { row: statePos.row, col: statePos.col };
-// }
+
 function getAllowedActions(statesArray, snakes, ladders, state) {
   const { colCount } = getStatesArraySize(statesArray);
   const { row: stateRow, col: stateCol } = getStatePosition(statesArray, state);

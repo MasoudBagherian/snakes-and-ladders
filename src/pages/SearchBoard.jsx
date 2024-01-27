@@ -36,8 +36,8 @@ function SearchBoard() {
       : implementDFS(statesArray, snakes, ladders).methodPath;
   const methodPathCells = methodPath.map((item) => `#cell-danger-${item}`);
   const successPathCells = successPath.map((item) => `#cell-success-${item}`);
-  console.log({ successPath });
-  console.log({ methodPath });
+  // console.log({ successPath });
+  // console.log({ methodPath });
   async function showSuccessCells() {
     for (const cell of successPathCells) {
       await animate(cell, { opacity: 1, scale: 1 }, { duration: 0.1 });
@@ -81,8 +81,8 @@ function SearchBoard() {
   }, [row, col, snakes, ladders]);
   return (
     <>
-      <Settings />
-      <Header isAnimating={isAnimating} />
+      <Settings isBtnDisabled={isAnimating} />
+      <Header isBtnDisabled={isAnimating} />
       <div className="my-[2rem]">
         <SelectionBox
           options={[methods.BFS, methods.DFS]}

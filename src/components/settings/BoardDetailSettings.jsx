@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Board from "../Board";
-import SettinsHeader from "./SettinsHeader";
+import SettingsHeader from "./SettingsHeader";
 import AddSnakeItem from "./AddSnakeItem";
 import AddLadderItem from "./AddLadderItem";
 import SnakesList from "./SnakesList";
@@ -20,10 +20,14 @@ function BoardDetailSettings({
   addLadder,
   deleteSnake,
   deleteLadder,
+  containerRef,
 }) {
+  useEffect(() => {
+    containerRef.current.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  }, []);
   return (
     <>
-      <SettinsHeader text="set snakes and ladders position(at least 2 snakes and 2 ladders)" />
+      <SettingsHeader text="set snakes and ladders position(at least 2 snakes and 2 ladders)" />
       <div className="">
         <div className="mb-[2rem] max-w-[50rem] flex flex-col ">
           <div className="border-b-[1px] border-b-gray-400 py-[1rem]">

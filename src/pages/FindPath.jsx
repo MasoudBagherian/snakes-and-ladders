@@ -12,59 +12,81 @@ import { BoardContext } from "../board_context/BoardContextProvider";
 import Header from "../components/layout/Header";
 import { useAnimate } from "framer-motion";
 
+import Modal from "../components/layout/Modal";
+import { useNavigate } from "react-router-dom";
+
 function FindPath() {
+  const navigate = useNavigate();
   const [scope, animate] = useAnimate();
   const [isAnimating, setIsAnimating] = useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   const { row, col, snakes, ladders } = useContext(BoardContext);
 
   const [showSuccessPath, setShowSuccessPath] = useState(false);
-
+  function closeModal(e) {
+    e.stopPropagation();
+    // setShowAlternativePath(true);
+    setTimeout(() => {
+      navigate("/search-board");
+    }, 500);
+    setModalIsOpen(false);
+  }
   const statesArray = useMemo(() => mkStatesArray(row, col), [row, col]);
   const boardArray = useMemo(
     () => implementValueIteration(statesArray, snakes, ladders),
     [row, col, snakes, ladders]
   );
-  const successPath = useMemo(
+  let successPath = useMemo(
     () => getSuccessPath(statesArray, snakes, ladders),
     [row, col, snakes, ladders]
   );
-  // console.log({ successPath });
+
+  const isSuccessPathInvalid = !successPath.includes(row * col);
+
   const successPathCells = successPath.map((item) => `#cell-success-${item}`);
+  // console.log("successPathCells", successPathCells);
   function hideAllOverlayCells() {
     animate(".cell-overlay", { opacity: 0, scale: 0 }, { duration: 0.01 });
   }
   function handleClickBtn() {
     setShowSuccessPath((prev) => !prev);
   }
-  async function showSuccessCells() {
+
+  async function showOverlayCells(overlayCells) {
     setIsAnimating(true);
-    for (const cell of successPathCells) {
+    for (const cell of overlayCells) {
       await animate(cell, { opacity: 1, scale: 1 }, { duration: 0.5 });
     }
     setIsAnimating(false);
   }
-  async function hideSuccessCells() {
+  async function hideOverlayCells(overlayCells) {
     setIsAnimating(true);
-    for (const cell of successPathCells.reverse()) {
+    for (const cell of overlayCells.reverse()) {
       await animate(cell, { opacity: 0, scale: 0 }, { duration: 0.5 });
     }
     setIsAnimating(false);
   }
   useEffect(() => {
     if (showSuccessPath) {
-      showSuccessCells();
+      showOverlayCells(successPathCells).then(() => {
+        if (isSuccessPathInvalid) {
+          setModalIsOpen(true);
+        }
+      });
     } else {
-      hideSuccessCells();
+      hideOverlayCells(successPathCells);
     }
   }, [showSuccessPath]);
   useEffect(() => {
     setShowSuccessPath(false);
     hideAllOverlayCells();
   }, [row, col, snakes, ladders]);
+
   return (
     <>
-      <Settings />
-      <Header isAnimating={isAnimating} />
+      <Settings isBtnDisabled={isAnimating} />
+      <Modal isOpen={modalIsOpen} handleClick={closeModal} />
+      <Header isBtnDisabled={isAnimating} />
       <h1 className="my-[4rem] text-center text-[3rem] font-bold uppercase">
         snakes & ladders
       </h1>

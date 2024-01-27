@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-function Header({ isAnimating }) {
+function Header({ isBtnDisabled }) {
   const navigate = useNavigate();
 
   function goToHomePage() {
@@ -11,7 +11,7 @@ function Header({ isAnimating }) {
       <button
         className="border-b-[2px] border-b-primary-light text-[2rem] disabled:cursor-not-allowed"
         onClick={goToHomePage}
-        disabled={isAnimating}
+        disabled={isBtnDisabled}
       >
         home
       </button>

@@ -2,19 +2,29 @@ import { useEffect, useState } from "react";
 import Board from "../Board";
 import SelectionBox from "../SelectionBox";
 import { mkNumericList } from "./Menu";
-import SettinsHeader from "./SettinsHeader";
+import SettingsHeader from "./SettingsHeader";
 import Label from "../layout/Label";
 
-function BoardSizeSettings({ row, col, updateRow, updateCol, boardArray }) {
+function BoardSizeSettings({
+  row,
+  col,
+  updateRow,
+  updateCol,
+  boardArray,
+  containerRef,
+}) {
   const [settingRow, setSettingRow] = useState(5);
   const [settingCol, setSettingCol] = useState(5);
   useEffect(() => {
     updateRow(settingRow);
     updateCol(settingCol);
   }, [settingRow, settingCol]);
+  useEffect(() => {
+    containerRef.current.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  }, []);
   return (
     <>
-      <SettinsHeader text="change row and column number" />
+      <SettingsHeader text="change row and column number" />
       <div className="flex flex-wrap mx-[-1rem] relative z-[1]">
         <div className="p-[1rem] ">
           <SelectionBox

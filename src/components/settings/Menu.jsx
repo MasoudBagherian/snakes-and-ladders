@@ -1,5 +1,5 @@
-import { motion } from "framer-motion";
-import { useContext, useMemo, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useContext, useMemo, useRef, useState } from "react";
 import {
   boardColors,
   defaults,
@@ -20,7 +20,9 @@ function Menu({ onToggleMenu }) {
   const [tempCol, setTempCol] = useState(5);
   const [tempSnakes, setTempSnakes] = useState([]);
   const [tempLadders, setTempLadders] = useState([]);
+  const [isAlertShow, setIsAlertShow] = useState(false);
   const [currentStepIdx, setCurrentStepIdx] = useState(1);
+  const menuContainerRef = useRef();
   const boardArray = useMemo(
     () => mkStatesArray(tempRow, tempCol),
     [tempRow, tempCol]
@@ -63,6 +65,9 @@ function Menu({ onToggleMenu }) {
     return tempSnakes.length >= 2 && tempLadders.length >= 2;
   }
   function applySettings() {
+    if (!isApplyAllowed()) {
+      return;
+    }
     onToggleMenu();
     setRow(tempRow);
     setCol(tempCol);
@@ -85,6 +90,7 @@ function Menu({ onToggleMenu }) {
           updateRow={setTempRow}
           updateCol={setTempCol}
           boardArray={boardArray}
+          containerRef={menuContainerRef}
         />
       );
     }
@@ -100,6 +106,7 @@ function Menu({ onToggleMenu }) {
           deleteLadder={deleteLadderItem}
           snakes={tempSnakes}
           ladders={tempLadders}
+          containerRef={menuContainerRef}
         />
       );
     }
@@ -115,6 +122,7 @@ function Menu({ onToggleMenu }) {
   }
   return (
     <motion.div
+      ref={menuContainerRef}
       className="fixed z-[10] pb-[4rem] px-[2rem] top-0 left-0 w-full h-full bg-white overflow-y-auto"
       initial={{ x: "-100%" }}
       animate={{ x: 0 }}
@@ -129,13 +137,30 @@ function Menu({ onToggleMenu }) {
           {currentStepIdx === 1 ? "next" : "back"}
         </BtnPrimary>
         {currentStepIdx === 2 ? (
-          <BtnPrimary
-            className="ml-auto"
-            handleClick={applySettings}
-            isDisabled={!isApplyAllowed()}
+          <button
+            className={`btn-primary ml-auto relative ${
+              !isApplyAllowed()
+                ? " bg-gray-400 border-gray-500 text-white cursor-not-allowed"
+                : "hover:bg-white hover:text-primary"
+            }`}
+            onClick={applySettings}
+            onMouseEnter={() => setIsAlertShow(true)}
+            onMouseLeave={() => setIsAlertShow(false)}
           >
             apply settings
-          </BtnPrimary>
+            <AnimatePresence>
+              {!isApplyAllowed() && isAlertShow ? (
+                <motion.span
+                  className="min-w-[18rem] mt-[15px] rounded-[5px] p-[3px] text-[1.2rem] absolute top-[100%] left-[50%] bg-danger/80 text-white  before:absolute before:w-0 before:h-0 before:border-[10px] before:border-b-danger/80 before:border-t-transparent before:border-l-transparent before:border-r-transparent before:left-[50%] before:translate-x-[-50%] before:bottom-[100%]"
+                  initial={{ opacity: 0, y: 50, x: "-50%" }}
+                  animate={{ opacity: 1, y: 0, x: "-50%" }}
+                  exit={{ opacity: 0, y: 50, x: "-50%" }}
+                >
+                  At least 2 snakes & 2 ladders needed
+                </motion.span>
+              ) : null}
+            </AnimatePresence>
+          </button>
         ) : null}
       </div>
     </motion.div>

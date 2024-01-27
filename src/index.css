@@ -10,8 +10,29 @@
     font-family: "Roboto", sans-serif;
   }
 }
-
+@layer components {
+  .btn-primary {
+    @apply mb-[2rem];
+    @apply text-[1.4rem];
+    @apply text-white;
+    @apply bg-primary-light;
+    @apply py-[.8rem];
+    @apply px-[1.2rem];
+    @apply border-[2px];
+    @apply border-primary;
+    @apply rounded-[5px];
+    @apply transition-all;
+    @apply duration-[.2];
+    @apply disabled:cursor-not-allowed;
+    @apply disabled:bg-gray-400;
+    @apply disabled:border-gray-500;
+    @apply disabled:text-white;
+  }
+}
 @layer base {
+  * {
+    user-select: none;
+  }
   html {
     @apply text-[62.5%];
     box-sizing: inherit;

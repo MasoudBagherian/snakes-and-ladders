@@ -11,6 +11,9 @@ function SelectionBox({
   const [showOptions, setShowOptions] = useState(false);
   const selectionRef = useRef();
   function handleClickSelection() {
+    if (isDisabled) {
+      return;
+    }
     setShowOptions((prev) => !prev);
   }
   function handleClickWindow(e) {
@@ -34,8 +37,8 @@ function SelectionBox({
       <div
         ref={selectionRef}
         className={`${
-          isDisabled ? "pointer-events-none cursor-not-allowed" : ""
-        } relative p-[5px] leading-[20px] h-[30px] border-[1px] border-black bg-whtie cursor-pointer table rounded-[3px] text-[1.4rem] min-w-[5rem] font-bold`}
+          isDisabled ? "cursor-not-allowed" : "cursor-pointer"
+        } relative p-[5px] leading-[20px] h-[30px] border-[1px] border-black bg-white  table rounded-[3px] text-[1.4rem] min-w-[5rem] font-bold`}
         onClick={handleClickSelection}
       >
         {value}
